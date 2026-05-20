@@ -15,7 +15,7 @@ An AI-powered French tutor that answers grammar and vocabulary questions using a
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+.venv\Scripts\activate      # Mac/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env        # fill in your OPENAI_API_KEY
 uvicorn main:app --reload
@@ -36,4 +36,4 @@ Frontend runs at `http://localhost:5173`.
 
 ## Project Status
 
-MVP in progress. See `private/current-status.md` for development state (not tracked in git).
+MVP in progress.
