@@ -1,0 +1,142 @@
+## Être vs Avoir in Passé Composé
+
+Most French verbs form the passé composé with avoir as the auxiliary verb.
+Example: J'ai mangé (I ate), Tu as parlé (You spoke), Il a fini (He finished).
+
+A fixed group of verbs — mostly verbs of motion or change of state — use être instead.
+Common être verbs include: aller (to go), venir (to come), partir (to leave), arriver (to arrive), naître (to be born), mourir (to die), rester (to stay), tomber (to fall), and all reflexive verbs.
+Example: Je suis allé(e) (I went), Elle est partie (She left), Nous nous sommes levés (We got up).
+
+When using être, the past participle must agree in gender and number with the subject.
+Example: Il est arrivé. / Elle est arrivée. / Ils sont arrivés. / Elles sont arrivées.
+
+
+## Adjective Agreement
+
+French adjectives must agree in gender (masculine/feminine) and number (singular/plural) with the noun they modify.
+Most adjectives add -e for feminine: petit → petite, grand → grande.
+Most adjectives add -s for masculine plural and -es for feminine plural: petits, petites.
+
+Some adjectives are irregular. Common patterns:
+- Adjectives ending in -eux become -euse in the feminine: heureux → heureuse (happy).
+- Adjectives ending in -er become -ère in the feminine: dernier → dernière (last).
+- Adjectives ending in -al become -aux in the masculine plural: national → nationaux.
+
+Most adjectives follow the noun in French: une voiture rouge (a red car).
+A small group of common adjectives precede the noun, remembered with the acronym BAGS: Beauty (beau, joli), Age (jeune, vieux, nouveau), Goodness (bon, mauvais), Size (grand, petit, long).
+
+
+## Gendered Nouns
+
+Every French noun has a grammatical gender — masculine or feminine. There is no neutral gender.
+The gender must be memorized with each noun, but some endings are reliable indicators.
+
+Common masculine endings: -age (le voyage), -ment (le gouvernement), -eur (le serveur), -isme (le tourisme).
+Common feminine endings: -tion (la nation), -sion (la décision), -ette (la baguette), -ité (la liberté), -ure (la voiture).
+
+Nouns referring to people often have both forms: un étudiant / une étudiante, un acteur / une actrice.
+Some nouns use the same form for both genders, distinguished only by the article: un/une élève (student).
+
+
+## Definite and Indefinite Articles
+
+Definite articles refer to a specific or known noun. They agree with the gender and number of the noun.
+le = masculine singular (le livre — the book)
+la = feminine singular (la table — the table)
+l' = before a vowel or silent h (l'ami, l'heure)
+les = all plurals (les livres, les tables)
+
+Indefinite articles refer to an unspecified noun.
+un = masculine singular (un chat — a cat)
+une = feminine singular (une maison — a house)
+des = plural (des chats — some cats / cats)
+
+After a negation, indefinite and partitive articles change to de (or d' before a vowel).
+Example: J'ai un chien. → Je n'ai pas de chien. (I don't have a dog.)
+
+
+## Partitive Articles
+
+Partitive articles express an unspecified quantity of something uncountable — roughly equivalent to "some" in English.
+du = masculine singular (du pain — some bread)
+de la = feminine singular (de la viande — some meat)
+de l' = before a vowel or silent h (de l'eau — some water)
+des = plural (des fruits — some fruit)
+
+They are commonly used with food, drink, and abstract concepts.
+Example: Je bois du café. (I drink coffee.) / Elle a de la patience. (She has patience.)
+
+After negation, all partitive articles become de (or d').
+Example: Je mange du pain. → Je ne mange pas de pain.
+
+
+## Negation
+
+Standard French negation uses two parts: ne … pas, placed around the conjugated verb.
+Example: Je parle. → Je ne parle pas. (I don't speak.)
+
+In spoken French, ne is frequently dropped, leaving just pas: Je parle pas. This is informal.
+
+Other common negation pairs:
+- ne … jamais (never): Il ne fume jamais.
+- ne … rien (nothing): Je ne vois rien.
+- ne … plus (no longer / not anymore): Elle ne travaille plus ici.
+- ne … personne (nobody): Je ne connais personne.
+
+In compound tenses like passé composé, ne and pas wrap the auxiliary verb.
+Example: Je n'ai pas mangé. (I didn't eat.) / Il n'est pas venu. (He didn't come.)
+
+
+## Question Formation
+
+There are three main ways to ask a yes/no question in French.
+
+1. Rising intonation (spoken French, informal): Tu parles français? (You speak French?)
+2. Est-ce que + statement: Est-ce que tu parles français?
+3. Inversion — place the verb before the subject and add a hyphen: Parles-tu français?
+   When the verb ends in a vowel and the subject is il/elle/on, add -t- for pronunciation: Parle-t-il?
+
+For information questions, add a question word before est-ce que or use inversion.
+Common question words: Qui (who), Que/Quoi (what), Où (where), Quand (when), Comment (how), Pourquoi (why), Combien (how much/many).
+Example: Où est-ce que tu habites? / Où habites-tu? (Where do you live?)
+
+
+## Passé Composé: Regular Verb Conjugation
+
+The passé composé is the most common past tense in spoken French. It expresses completed actions.
+It is formed with: subject + auxiliary verb (avoir or être, conjugated in present) + past participle.
+
+Regular past participles are formed by dropping the infinitive ending and adding a new suffix:
+- -er verbs add -é: parler → parlé
+- -ir and -re verbs drop their ending and add -i or -u respectively: finir → fini, vendre → vendu
+
+Full example with avoir (parler):
+j'ai parlé, tu as parlé, il/elle a parlé, nous avons parlé, vous avez parlé, ils/elles ont parlé.
+
+Many common verbs have irregular past participles that must be memorized.
+Examples: être → été, avoir → eu, faire → fait, prendre → pris, voir → vu, boire → bu, pouvoir → pu.
+
+
+## Pronunciation: Silent Letters and Liaison
+
+French has many silent final consonants. The last consonant of a word is usually not pronounced.
+Examples: vous (the s is silent), grand (the d is silent), beaucoup (the p is silent).
+
+However, liaison occurs when a normally silent final consonant is pronounced because the next word begins with a vowel or silent h. This links the two words in speech.
+Examples: vous avez → "vou-zavez", les enfants → "lay-zenfants", un ami → "u-nami".
+
+Liaison is mandatory in some contexts (after articles, pronouns, short adjectives before nouns) and forbidden in others (after et, before an aspirate h like les haricots).
+
+The letter e at the end of a word is usually silent, but it affects the pronunciation of the preceding consonant.
+Example: grand (d silent) vs grande (d is pronounced because of the final e).
+
+
+## Common Spelling Patterns: Accents
+
+French uses five types of diacritical marks that change pronunciation or distinguish meaning.
+
+1. accent aigu (é): produces the "ay" sound. été (summer), café.
+2. accent grave (è, à, ù): è produces an open "eh" sound (père — father). à and ù distinguish words: a (has) vs à (at/to), ou (or) vs où (where).
+3. accent circonflexe (â, ê, î, ô, û): often marks a historical dropped s, slightly changes vowel quality. forêt (forest), hôtel, fête (party).
+4. tréma (ë, ï, ü): indicates the vowel is pronounced separately from the previous one. Noël (Christmas), naïf (naive).
+5. cédille (ç): makes c produce an "s" sound before a, o, u. façade, garçon (boy), français.
