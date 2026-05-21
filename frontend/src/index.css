@@ -1,3 +1,140 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── Color tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:              oklch(98.5% 0.006 75);
+  --surface:         oklch(100% 0 0);
+  --border:          oklch(90% 0.007 75);
+  --border-hover:    oklch(78% 0.008 75);
+
+  --text-primary:    oklch(18% 0.008 270);
+  --text-secondary:  oklch(46% 0.008 270);
+  --text-muted:      oklch(62% 0.006 270);
+
+  --accent:          oklch(50% 0.13 265);
+  --accent-hover:    oklch(44% 0.14 265);
+  --accent-subtle:   oklch(96.5% 0.022 265);
+  --accent-border:   oklch(78% 0.07 265);
+
+  --error:           oklch(48% 0.18 22);
+
+  --shimmer-mid:     oklch(93% 0.005 75);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────── */
+body {
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* ─── Placeholder ───────────────────────────────────────────────── */
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+/* ─── Focus rings — keyboard only ──────────────────────────────── */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.focus-ring:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ─── Input textarea ────────────────────────────────────────────── */
+.input-field {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: border-color 150ms ease-out;
+}
+.input-field:hover:not(:disabled) {
+  border-color: var(--border-hover);
+}
+.input-field:focus {
+  border-color: var(--accent);
+}
+
+/* ─── Submit button ─────────────────────────────────────────────── */
+.btn-accent {
+  background-color: var(--accent);
+  transition: background-color 150ms ease-out, opacity 150ms ease-out;
+}
+.btn-accent:not(:disabled):hover {
+  background-color: var(--accent-hover);
+}
+.btn-accent:not(:disabled):active {
+  background-color: oklch(41% 0.14 265);
+}
+
+/* ─── Level tabs ────────────────────────────────────────────────── */
+.level-tab {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+}
+.level-tab[aria-selected="true"] {
+  background-color: var(--accent);
+  border-color: transparent;
+  color: white;
+}
+.level-tab:not([aria-selected="true"]):not(:disabled):hover {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* ─── Loading shimmer ───────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position:  800px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--border)      0%,
+    var(--shimmer-mid) 50%,
+    var(--border)      100%
+  );
+  background-size: 1600px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ─── Results fade-in ───────────────────────────────────────────── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 220ms cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    background: var(--border);
+    opacity: 0.65;
+  }
+
+  .fade-in {
+    animation: none;
+  }
+}
