@@ -1,5 +1,7 @@
 import os
 import json
+import chromadb
+from openai import OpenAI
 from dotenv import load_dotenv
 
 _dir = os.path.dirname(os.path.abspath(__file__))
@@ -8,6 +10,9 @@ load_dotenv(os.path.join(_dir, ".env"))
 
 _raw_db_path = os.getenv("CHROMA_DB_PATH", "./chroma_data")
 DB_PATH = _raw_db_path if os.path.isabs(_raw_db_path) else os.path.join(_dir, _raw_db_path)
+
+_openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+_collection = chromadb.PersistentClient(path=DB_PATH).get_or_create_collection("french_grammar")
 
 _FALLBACK = {
     "answer": "Sorry, I could not generate an answer. Please try again.",
@@ -32,20 +37,13 @@ _SYSTEM_PROMPT = (
 
 
 def answer_question(question: str, level: str) -> dict:
-    import chromadb
-    from openai import OpenAI
-
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-    embed_response = client.embeddings.create(
+    embed_response = _openai_client.embeddings.create(
         model="text-embedding-3-small",
         input=question,
     )
     question_embedding = embed_response.data[0].embedding
 
-    chroma = chromadb.PersistentClient(path=DB_PATH)
-    collection = chroma.get_or_create_collection("french_grammar")
-    results = collection.query(query_embeddings=[question_embedding], n_results=3)
+    results = _collection.query(query_embeddings=[question_embedding], n_results=3)
     documents = results.get("documents")
     if not documents or not documents[0]:
         return _FALLBACK
@@ -54,7 +52,7 @@ def answer_question(question: str, level: str) -> dict:
     context = "\n---\n".join(chunks)
     user_msg = f"Question: {question}\n\nRelevant content:\n{context}"
 
-    completion = client.chat.completions.create(
+    completion = _openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": _SYSTEM_PROMPT.format(level=level)},
