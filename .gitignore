@@ -1,5 +1,8 @@
 private/
 .claude/
+.impeccable/
+PRODUCT.md
+DESIGN.md
 
 .env
 .env.*
