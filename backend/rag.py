@@ -24,7 +24,10 @@ _SYSTEM_PROMPT = (
     '"examples" (array of exactly 2 example sentences), '
     '"practice_question" (string), '
     '"source_snippet" (the single most relevant sentence copied verbatim from the provided content). '
-    "Adjust the explanation for a {level} learner. Be concise."
+    "Adjust the explanation for a {level} learner. Be concise. "
+    "Write the answer and practice_question in English. "
+    "Keep French example sentences in French when useful. "
+    "The source_snippet must remain copied verbatim from the retrieved source."
 )
 
 
