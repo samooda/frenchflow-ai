@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Literal
+from rag import answer_question
 
 app = FastAPI(title="FrenchFlow AI")
 
@@ -30,11 +31,7 @@ def health_check():
     return {"status": "ok"}
 
 
+# TODO: add rate limiting here before public deployment
 @app.post("/ask", response_model=AskResponse)
 def ask(body: AskRequest):
-    return AskResponse(
-        answer="RAG pipeline not implemented yet.",
-        examples=[],
-        practice_question="",
-        source_snippet="",
-    )
+    return AskResponse(**answer_question(body.question, body.level))
