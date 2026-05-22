@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
-const API_URL = 'http://localhost:8000/ask'
+const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/ask`
 
 // ─── Level pill-tab selector with roving tabindex ──────────────────
 
