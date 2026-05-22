@@ -1,0 +1,14 @@
+{
+  "source_title": "Tex's French Grammar",
+  "source_url": "https://www.laits.utexas.edu/tex/",
+  "primary_author": "Carl Blyth",
+  "contributors": "Karen Kelton, Lindsy Myers, Catherine Delyfer, Yvonne Munn, Jane Lippmann",
+  "institution": "University of Texas at Austin, Dept. of French and Italian, COERLL",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "footer_text_extracted": null,
+  "license_url_extracted_from": "https://www.laits.utexas.edu/tex/gr/ver1.html",
+  "extracted_at": "2026-05-22T01:17:12Z",
+  "author_fields_source_url": "https://www.laits.utexas.edu/tex/gr/credits.html",
+  "author_fields_source_note": "Verified via WebFetch during planning (Carl Blyth et al., UT Austin / COERLL); page returned HTTP 404 at automated fetch time. Fields are hardcoded from that pre-implementation lookup."
+}

@@ -74,14 +74,13 @@ def _extract_manifest_meta(html, source_url):
         "license": "CC BY 3.0",
         "license_url": license_url or "https://creativecommons.org/licenses/by/3.0/",
         "footer_text_extracted": footer_text,
-        "extracted_from": source_url,
+        "license_url_extracted_from": source_url,
         "extracted_at": _now_iso(),
-        "credits_note": (
-            "Author and institution details verified via credits.html during planning "
-            "(Carl Blyth et al., UT Austin / COERLL). The credits.html page returned "
-            "HTTP 404 at fetch time; details above were captured via WebFetch before "
-            "implementation began. The license URL was extracted programmatically from "
-            "the CC badge on a live grammar page."
+        "author_fields_source_url": "https://www.laits.utexas.edu/tex/gr/credits.html",
+        "author_fields_source_note": (
+            "Verified via WebFetch during planning (Carl Blyth et al., UT Austin / COERLL); "
+            "page returned HTTP 404 at automated fetch time. Fields are hardcoded from "
+            "that pre-implementation lookup."
         ),
     }
 
