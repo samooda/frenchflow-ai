@@ -18,3 +18,4 @@ venv/
 
 backend/chroma_data/
 backend/uvicorn.*
+backend/data/raw_sources/

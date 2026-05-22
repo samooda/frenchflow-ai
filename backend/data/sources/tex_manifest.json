@@ -1,0 +1,152 @@
+[
+  {
+    "id": "tex_ver1",
+    "topic": "Present tense: regular -ER verbs",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/ver1.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_vir1",
+    "topic": "Present tense: regular -IR verbs",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/vir1.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_vre1",
+    "topic": "Present tense: regular -RE verbs",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/vre1.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_virr1",
+    "topic": "Irregular verb: être",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/virr1.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_virr2",
+    "topic": "Irregular verb: avoir",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/virr2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_virr4",
+    "topic": "Irregular verb: aller",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/virr4.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_virr5",
+    "topic": "Irregular verb: faire",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/virr5.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_tap5",
+    "topic": "Imparfait: formation",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/tap5.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_tap6",
+    "topic": "Imparfait: states of being and habitual actions",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/tap6.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_tap8",
+    "topic": "Passé composé vs imparfait: narration",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/tap8.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_taf1",
+    "topic": "Futur proche: aller + infinitive",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/taf1.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_pro5",
+    "topic": "Direct object pronouns",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/pro5.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_pro8",
+    "topic": "Indirect object pronouns",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/pro8.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_pre2",
+    "topic": "Contractions of à and de with definite articles",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/pre2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_adj6",
+    "topic": "Comparison of adjectives",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/adj6.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  }
+]
