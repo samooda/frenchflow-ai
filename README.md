@@ -60,3 +60,7 @@ Frontend runs at `http://localhost:5173`.
 ## Project Status
 
 MVP complete, with post-MVP improvements shipped. The full RAG pipeline is wired end-to-end: the frontend sends questions to the FastAPI backend, which retrieves relevant chunks from ChromaDB, calls GPT-4o-mini, and returns structured answers to the UI. Post-MVP work includes enforced English responses, reduced per-request overhead, and rate limiting on the API.
+
+## Attribution
+
+The knowledge base includes content from [Tex's French Grammar](https://www.laits.utexas.edu/tex/), authored by Carl Blyth with contributions from Karen Kelton, Lindsy Myers, Catherine Delyfer, Yvonne Munn, and Jane Lippmann (University of Texas at Austin, Dept. of French and Italian, COERLL). Licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0). Content was fetched, cleaned, processed, and chunked for RAG retrieval context.
