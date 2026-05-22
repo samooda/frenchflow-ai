@@ -21,6 +21,15 @@ An AI-powered French tutor that answers grammar and vocabulary questions using a
 - Fully keyboard-accessible — level selector supports arrow-key navigation
 - Loading, error, and success states with smooth transitions
 
+## How It Works
+
+1. The user submits a question and selects a learner level (Beginner, Intermediate, or Advanced)
+2. The question is embedded using `text-embedding-3-small`
+3. The top 3 closest chunks are retrieved from a ChromaDB vector store
+4. `gpt-4o-mini` receives the question, level, and retrieved chunks as context
+5. Returns a structured JSON response: answer, usage examples, a practice question, and a source snippet
+6. Responses are always in English; French example sentences are preserved in French
+
 ## Local Setup
 
 ### Backend
@@ -33,10 +42,11 @@ pip install -r requirements.txt
 cp .env.example .env        # fill in your OPENAI_API_KEY
 ```
 
-Embed the seed knowledge base (run once):
+Build the knowledge base (run once, requires `OPENAI_API_KEY`):
 
 ```bash
 python ingest.py
+python ingest_tex.py
 ```
 
 Start the server:
@@ -49,13 +59,6 @@ Backend runs at `http://localhost:8000`.
 - `GET /` — health check
 - `POST /ask` — accepts `{ question, level }`, returns `{ answer, examples, practice_question, source_snippet }`. Rate-limited to 10 requests/minute per IP.
 
-To refresh the knowledge base, delete `chroma_data/` and rerun both ingest scripts:
-
-```bash
-python ingest.py
-python ingest_tex.py
-```
-
 ### Frontend
 
 ```bash
@@ -66,9 +69,18 @@ npm run dev
 
 Frontend runs at `http://localhost:5173`.
 
-## Project Status
+### Refresh the knowledge base
 
-Fully working local MVP with a complete data ingestion pipeline. Source content from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) was fetched, cleaned, and chunked into 17 retrievable entries, expanding the local ChromaDB knowledge base from 10 seed chunks to 27 total chunks. At query time, questions are embedded with `text-embedding-3-small`, the top 3 chunks are retrieved, and `gpt-4o-mini` returns a structured JSON response (answer, examples, practice question, source snippet). Responses are enforced in English; the API is rate-limited at 10 req/min per IP. Verified end-to-end through the browser UI.
+Delete `chroma_data/` and rerun both ingest scripts:
+
+```bash
+python ingest.py
+python ingest_tex.py
+```
+
+## Architecture
+
+The vector store is ChromaDB with 27 chunks from two sources: 10 seed chunks and 17 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
 
 ## Future Improvements
 
