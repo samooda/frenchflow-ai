@@ -2,6 +2,8 @@
 
 An AI-powered French tutor that answers grammar and vocabulary questions using a curated knowledge base.
 
+![FrenchFlow AI — structured answer with examples, practice question, and source snippet](docs/screenshot.jpg)
+
 ## Tech Stack
 
 - **Frontend:** React, Tailwind CSS, Vite
@@ -45,7 +47,12 @@ Backend runs at `http://localhost:8000`.
 - `GET /` — health check
 - `POST /ask` — accepts `{ question, level }`, returns `{ answer, examples, practice_question, source_snippet }`. Rate-limited to 10 requests/minute per IP.
 
-To refresh the knowledge base, delete `chroma_data/` and rerun `ingest.py`.
+To refresh the knowledge base, delete `chroma_data/` and rerun both ingest scripts:
+
+```bash
+python ingest.py
+python ingest_tex.py
+```
 
 ### Frontend
 
@@ -59,7 +66,17 @@ Frontend runs at `http://localhost:5173`.
 
 ## Project Status
 
-MVP complete, with post-MVP improvements shipped. The full RAG pipeline is wired end-to-end: the frontend sends questions to the FastAPI backend, which retrieves relevant chunks from ChromaDB, calls GPT-4o-mini, and returns structured answers to the UI. Post-MVP work includes enforced English responses, reduced per-request overhead, and rate limiting on the API.
+Fully working local MVP with a complete data ingestion pipeline. Source content from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) was fetched, cleaned, and chunked into 17 retrievable entries, expanding the local ChromaDB knowledge base from 10 seed chunks to 27 total chunks. At query time, questions are embedded with `text-embedding-3-small`, the top 3 chunks are retrieved, and `gpt-4o-mini` returns a structured JSON response (answer, examples, practice question, source snippet). Responses are enforced in English; the API is rate-limited at 10 req/min per IP. Verified end-to-end through the browser UI.
+
+## Future Improvements
+
+- Supabase Auth — user accounts and session management
+- User profiles — saved level preference and personalisation
+- Saved vocabulary — bookmark words and phrases for review
+- Question and answer history — revisit past sessions
+- Deployment — input limits, CORS restrictions, and usage controls (Vercel + Render/Railway)
+- Security hardening — rate limit tuning, input validation, API key rotation policy
+- Docker / Kubernetes — optional later DevOps improvements
 
 ## Attribution
 
