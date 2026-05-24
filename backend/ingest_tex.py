@@ -16,10 +16,7 @@ import glob
 import json
 import os
 
-from pipeline_config import CHUNKS_DIR, DB_PATH
-
-COLLECTION_NAME = "french_grammar"
-EMBED_MODEL = "text-embedding-3-small"
+from pipeline_config import CHUNKS_DIR, DB_PATH, COLLECTION_NAME, EMBED_MODEL
 
 _METADATA_FIELDS = (
     "topic",

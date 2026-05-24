@@ -2,17 +2,11 @@ import os
 import json
 import chromadb
 from openai import OpenAI
-from dotenv import load_dotenv
 
-_dir = os.path.dirname(os.path.abspath(__file__))
-
-load_dotenv(os.path.join(_dir, ".env"))
-
-_raw_db_path = os.getenv("CHROMA_DB_PATH", "./chroma_data")
-DB_PATH = _raw_db_path if os.path.isabs(_raw_db_path) else os.path.join(_dir, _raw_db_path)
+from pipeline_config import DB_PATH, COLLECTION_NAME, EMBED_MODEL
 
 _openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-_collection = chromadb.PersistentClient(path=DB_PATH).get_or_create_collection("french_grammar")
+_collection = chromadb.PersistentClient(path=DB_PATH).get_or_create_collection(COLLECTION_NAME)
 
 _FALLBACK = {
     "answer": "Sorry, I could not generate an answer. Please try again.",
@@ -38,7 +32,7 @@ _SYSTEM_PROMPT = (
 
 def answer_question(question: str, level: str) -> dict:
     embed_response = _openai_client.embeddings.create(
-        model="text-embedding-3-small",
+        model=EMBED_MODEL,
         input=question,
     )
     question_embedding = embed_response.data[0].embedding
@@ -60,6 +54,7 @@ def answer_question(question: str, level: str) -> dict:
         ],
         response_format={"type": "json_object"},
         max_tokens=350,
+        timeout=30,
     )
 
     raw = completion.choices[0].message.content

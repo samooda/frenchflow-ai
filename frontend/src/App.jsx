@@ -175,17 +175,30 @@ export default function App() {
     setErrorMsg('')
 
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10_000)
+
       const res = await fetch(API_URL, {
+        signal: controller.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: question.trim(), level: level.toLowerCase() }),
       })
+      clearTimeout(timeoutId)
+
+      if (res.status === 429) throw new Error('rate_limited')
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setResult(data)
       setStatus('success')
-    } catch {
-      setErrorMsg('Something went wrong. Please try again.')
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        setErrorMsg('Request timed out — please try again.')
+      } else if (err.message === 'rate_limited') {
+        setErrorMsg('Too many requests — please wait a moment and try again.')
+      } else {
+        setErrorMsg('Something went wrong. Please try again.')
+      }
       setStatus('error')
     }
   }

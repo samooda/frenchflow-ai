@@ -16,11 +16,8 @@ import sys
 import chromadb
 from openai import OpenAI
 
-from pipeline_config import DB_PATH
+from pipeline_config import DB_PATH, COLLECTION_NAME, EMBED_MODEL
 from rag import answer_question
-
-COLLECTION_NAME = "french_grammar"
-EMBED_MODEL = "text-embedding-3-small"
 
 
 def _preview(text, n=160):

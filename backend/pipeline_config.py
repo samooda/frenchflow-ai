@@ -15,6 +15,9 @@ CHUNKS_DIR = os.path.join(DATA_DIR, "processed_chunks")
 _raw_db_path = os.getenv("CHROMA_DB_PATH", "./chroma_data")
 DB_PATH = _raw_db_path if os.path.isabs(_raw_db_path) else os.path.join(_dir, _raw_db_path)
 
+COLLECTION_NAME = "french_grammar"
+EMBED_MODEL = "text-embedding-3-small"
+
 
 def load_manifest():
     with open(MANIFEST_PATH, encoding="utf-8") as f:
