@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-05-22T03:28:26Z",
-  "pages_attempted": 15,
-  "pages_processed": 15,
+  "generated_at": "2026-05-24T03:12:32Z",
+  "pages_attempted": 26,
+  "pages_processed": 26,
   "pages_skipped": 0,
-  "total_chunks": 17,
+  "total_chunks": 34,
   "warnings": [],
   "chunk_stats": {
-    "min_words": 184,
-    "max_words": 564,
-    "avg_words": 365
+    "min_words": 129,
+    "max_words": 600,
+    "avg_words": 380
   }
 }

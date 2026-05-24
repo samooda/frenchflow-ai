@@ -1,0 +1,34 @@
+[
+  {
+    "id": "tex_tap3_0",
+    "text": "1. | uses\n2. | formation\n3. | the Alamo of être\n4. | irregular past participles\n5. | agreement of past participle\n\nuses\n\nThere are several past tenses in French, and each is used in very specific situations.\nThe passé composé is the most common past tense; it is used to relate actions or events completed in the past.\nThe passé composé may be translated into English in three different ways depending on the context.\n\nTex went to the Alamo.\nTex est allé à l'Alamo. | Tex has gone to the Alamo.\nTex did go to the Alamo.\n\nformation\n\nThe passé composé consists of two parts, the present tense of an auxiliary,\nor helping verb (either avoir or être ), and a past participle.\nIn most instances the auxiliary verb used is avoir .\n\npassé composé = present tense of auxiliary + past participle\n\nHowever, several intransitive verbs, like aller (to go),\nrequire the auxiliary être instead. Note that the past participle agrees with the subject in number and in gender.\n\naller 'to go'\nje suis allé(e), I went (have gone) | nous sommes allé(e)s, we went (have gone)\ntu es allé(e), you went (have gone) | vous êtes allé(e)(s), you went (have gone)\nil / on est allé, he / one went (has gone) | ils sont allés, they went, (have gone)\nelle est allée, she went (has gone) | elles sont allées, they went, (have gone)\n\nThe negation is formed by placing ne  ... pas around the conjugated verb,\nwhich in this case, is the auxiliary être :\nJe ne suis pas allé(e),\nTu n' es pas allé(e), etc.\n\nthe Alamo of être\n\nMany intransitive verbs, that is, verbs not followed by a direct object,\ntake être in the passé composé.\nMany of these verbs also indicate motion. They are verbs of coming and going.\nEven naître (to be born) and mourir (to die) can be thought of as coming and going in metaphorical terms.\nThe Alamo d'Être illustrates this group of verbs.\n\nA few of these verbs of movement ( monter , descendre , sortir , passer , retourner ) may sometimes take a direct object,\nthus becoming transitive . When they do, the auxiliary used is avoir , instead of être . Example:\n\nTex est sorti. | Tex went out.\nTex n'a pas sorti la poubelle. | Tex did not take out the garbage.\n\nIt is important to note that many intransitive verbs of movement, like courir and marcher ,\ndo not use être but avoir .\n\nThe pronominal verbs form another important group of verbs which use être as the auxiliary in the passé composé.\n\nirregular past participles\n\nThe past participles of the verbs that use être as an auxiliary are regular except for the following:\n\ninfinitive | translation | past participle\nvenir | to come | venu\ndevenir | to become | devenu\nrevenir | to come back | revenu\nnaître | to be born | né\nmourir | to die | mort\n\nagreement of the past participle\n\nThe past participle of a verb which takes être agrees in gender and number with the subject;\nthat means an -e is added to the past participle to agree with a feminine subject and an -s is added for a plural subject.\nIf the subject is feminine plural, -es is added.",
+    "source_title": "Tex's French Grammar",
+    "source_url": "https://www.laits.utexas.edu/tex/gr/tap3.html",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "attribution": "Tex's French Grammar by Carl Blyth et al., University of Texas at Austin, Dept. of French and Italian, COERLL, licensed CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)",
+    "topic": "Passé composé with être",
+    "level": "beginner",
+    "source_type": "open_educational_resource",
+    "retrieved_at": "2026-05-24T03:12:26Z",
+    "processed_at": "2026-05-24T03:12:32Z",
+    "word_count": 556,
+    "char_count": 2990
+  },
+  {
+    "id": "tex_tap3_1",
+    "text": "Joe-Bob: Tex, Corey et toi, vous êtes rentrés de l'Alamo? | Joe-Bob: Tex, did you and Corey come back from the Alamo?\nTex: Oui. Mais Tammy et Bette sont restées à San Antonio pour faire des achats. | Tex: Yes. But Tammy and Bette stayed in San Antonio to go shopping.\nCorey: Tu n'as pas entendu? Tout d'un coup Tammy est devenue toute pâle et elle est tombée dans la rivière! | Corey: Didn't you hear? All of a sudden Tammy turned very pale and she fell in the river!\nJoe-Bob: Mais, qu'est-ce qui s'est passé? | Joe-Bob: But, what happened?\nCorey: Calme-toi. Elle n'est pas morte! Tex et moi sommes arrivés pour la sauver! | Corey: Calm down. She didn't die! Tex and I arrived to save her!",
+    "source_title": "Tex's French Grammar",
+    "source_url": "https://www.laits.utexas.edu/tex/gr/tap3.html",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "attribution": "Tex's French Grammar by Carl Blyth et al., University of Texas at Austin, Dept. of French and Italian, COERLL, licensed CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)",
+    "topic": "Passé composé with être",
+    "level": "beginner",
+    "source_type": "open_educational_resource",
+    "retrieved_at": "2026-05-24T03:12:26Z",
+    "processed_at": "2026-05-24T03:12:32Z",
+    "word_count": 129,
+    "char_count": 689
+  }
+]

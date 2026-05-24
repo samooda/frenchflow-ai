@@ -148,5 +148,115 @@
     "license": "CC BY 3.0",
     "license_url": "https://creativecommons.org/licenses/by/3.0/",
     "notes": ""
+  },
+  {
+    "id": "tex_no3",
+    "topic": "Gender of nouns: masculine and feminine",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/no3.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_det2",
+    "topic": "Definite articles",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/det2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_det4",
+    "topic": "Indefinite articles",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/det4.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_det5",
+    "topic": "Partitive articles",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/det5.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_adj2",
+    "topic": "Adjective agreement: formation and placement",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/adj2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_neg2",
+    "topic": "Basic negation: ne ... pas",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/neg2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_neg3",
+    "topic": "Negation: alternate forms (ne...jamais, ne...rien, ne...plus, ne...personne)",
+    "level": "intermediate",
+    "url": "https://www.laits.utexas.edu/tex/gr/neg3.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_int2",
+    "topic": "Yes/no questions",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/int2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_int7",
+    "topic": "Interrogative words (qui, que, où, quand, comment, pourquoi, combien)",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/int7.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_tap2",
+    "topic": "Passé composé with avoir",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/tap2.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
+  },
+  {
+    "id": "tex_tap3",
+    "topic": "Passé composé with être",
+    "level": "beginner",
+    "url": "https://www.laits.utexas.edu/tex/gr/tap3.html",
+    "source_title": "Tex's French Grammar",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "notes": ""
   }
 ]
