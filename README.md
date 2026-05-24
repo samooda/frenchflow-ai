@@ -45,7 +45,6 @@ cp .env.example .env        # fill in your OPENAI_API_KEY
 Build the knowledge base (run once, requires `OPENAI_API_KEY`):
 
 ```bash
-python ingest.py
 python ingest_tex.py
 ```
 
@@ -71,16 +70,15 @@ Frontend runs at `http://localhost:5173`.
 
 ### Refresh the knowledge base
 
-Delete `chroma_data/` and rerun both ingest scripts:
+Delete `chroma_data/` and rerun the ingest script:
 
 ```bash
-python ingest.py
 python ingest_tex.py
 ```
 
 ## Architecture
 
-The vector store is ChromaDB with 27 chunks from two sources: 10 seed chunks and 17 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
+The vector store is ChromaDB with 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passé composé, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
 
 ## Future Improvements
 
@@ -91,6 +89,7 @@ The vector store is ChromaDB with 27 chunks from two sources: 10 seed chunks and
 - Deployment — input limits, CORS restrictions, and usage controls (Vercel + Render/Railway)
 - Security hardening — rate limit tuning, input validation, API key rotation policy
 - Docker / Kubernetes — optional later DevOps improvements
+- Pronunciation and accent coverage — currently out of scope (Tex's French Grammar has no dedicated pages for liaison, silent letters, or orthography)
 
 ## Attribution
 

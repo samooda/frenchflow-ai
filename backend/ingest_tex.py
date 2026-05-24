@@ -1,10 +1,10 @@
 """
-Phase 3 of the Tex's French Grammar ingestion pipeline.
+Embeds processed Tex chunks into ChromaDB.
 
 Reads backend/data/processed_chunks/tex_*.json, embeds chunk["text"] via
 text-embedding-3-small, and upserts into the 'french_grammar' ChromaDB
 collection used by rag.py. Stable IDs (tex_{slug}_{n}) come from
-process_tex.py and don't collide with the seed IDs chunk_0..chunk_9.
+process_tex.py.
 
 Usage:
     python ingest_tex.py --dry-run   # plan only; no OpenAI / Chroma writes
