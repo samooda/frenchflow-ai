@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import AuthModal from './components/AuthModal'
+import HistoryList from './components/HistoryList'
 import UserMenu from './components/UserMenu'
 import { useAuth } from './context/AuthContext'
+import { useHistory } from './hooks/useHistory'
 import { supabase } from './lib/supabase'
 
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
@@ -167,7 +169,9 @@ export default function App() {
   const [result, setResult]     = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [isAuthOpen, setIsAuthOpen] = useState(false)
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
   const { user } = useAuth()
+  const { recordHistory } = useHistory()
 
   const isLoading = status === 'loading'
   const canSubmit = question.trim().length > 0 && !isLoading
@@ -238,6 +242,18 @@ export default function App() {
       const data = await res.json()
       setResult(data)
       setStatus('success')
+
+      if (user) {
+        const historyEntry = {
+          question: question.trim(),
+          level,
+          answer: data.answer,
+          practice_question: data.practice_question,
+          source_snippet: data.source_snippet,
+        }
+
+        recordHistory(historyEntry)
+      }
     } catch (err) {
       if (err.name === 'AbortError') {
         setErrorMsg('Request timed out — please try again.')
@@ -263,7 +279,13 @@ export default function App() {
             Ask a grammar or vocabulary question. Get a structured, sourced answer.
           </p>
           {user ? (
-            <UserMenu />
+            <>
+              <UserMenu />
+              {/* // design-pass */}
+              <button type="button" onClick={() => setIsHistoryOpen(current => !current)}>
+                History
+              </button>
+            </>
           ) : (
             <>
               {/* // design-pass */}
@@ -275,6 +297,7 @@ export default function App() {
         </header>
 
         {isAuthOpen && <AuthModal onClose={() => setIsAuthOpen(false)} />}
+        {user && isHistoryOpen && <HistoryList />}
 
         {/* Form */}
         <form onSubmit={handleSubmit} noValidate>
