@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -8,6 +10,7 @@ from slowapi.util import get_remote_address
 from rag import answer_question
 
 limiter = Limiter(key_func=get_remote_address)
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 
 app = FastAPI(title="FrenchFlow AI")
 app.state.limiter = limiter
@@ -15,7 +18,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[frontend_origin],
     allow_methods=["*"],
     allow_headers=["*"],
 )
