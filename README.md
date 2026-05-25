@@ -2,22 +2,25 @@
 
 An AI-powered French tutor that answers grammar and vocabulary questions using a curated knowledge base.
 
-![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white) ![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6F00?style=flat) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white) ![Pinecone](https://img.shields.io/badge/Pinecone-000000?style=flat) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 ![Answered question with structured explanation, examples, practice question, and source snippet](docs/Answered_Question.jpg)
+
 Answered question view.
 
 ![Learning history tab with saved question and answer sessions](docs/History_Tab.jpg)
+
 Learning history tab.
 
 ![Saved vocabulary tab with saved example sentences](docs/Vocab_Tab.jpg)
+
 Saved vocabulary tab.
 
 ## Tech Stack
 
 - **Frontend:** React, React Router, Tailwind CSS, Vite
 - **Backend:** Python, FastAPI, Uvicorn
-- **AI/RAG:** OpenAI API (`text-embedding-3-small`, `gpt-4o-mini`), ChromaDB
+- **AI/RAG:** OpenAI API (`text-embedding-3-small`, `gpt-4o-mini`), Pinecone
 - **User data:** Supabase Auth and Postgres through `@supabase/supabase-js`
 
 ## Features
@@ -38,7 +41,7 @@ Saved vocabulary tab.
 
 1. The user submits a question and selects a learner level: Beginner, Intermediate, or Advanced
 2. The question is embedded using `text-embedding-3-small`
-3. The top 3 closest chunks are retrieved from a ChromaDB vector store
+3. The top 3 closest chunks are retrieved from a Pinecone vector index
 4. `gpt-4o-mini` receives the question, level, and retrieved chunks as context
 5. The backend returns structured JSON: answer, usage examples, a practice question, and a source snippet
 6. Responses are always in English; French example sentences are preserved in French
@@ -53,10 +56,10 @@ cd backend
 python -m venv .venv
 .venv\Scripts\activate      # Mac/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env        # fill in your OPENAI_API_KEY
+cp .env.example .env        # fill in OPENAI_API_KEY and PINECONE_API_KEY
 ```
 
-Build the knowledge base (run once, requires `OPENAI_API_KEY`):
+Build the knowledge base (run once, requires `OPENAI_API_KEY`, `PINECONE_API_KEY`, and a Pinecone index named `frenchflow` with 1536 dimensions and cosine metric):
 
 ```bash
 python ingest_tex.py
@@ -93,10 +96,10 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 ### Refresh the knowledge base
 
-Delete `chroma_data/` and rerun the ingest script:
+Reset the Pinecone namespace and rerun the ingest script:
 
 ```bash
-python ingest_tex.py
+python ingest_tex.py --reset
 ```
 
 ## Architecture
@@ -110,7 +113,7 @@ The app is split into a Vite/React frontend and a FastAPI backend. React Router 
 
 The frontend talks to the backend through `VITE_API_URL` for RAG answers and to Supabase through `@supabase/supabase-js` for auth and user data. Supabase stores profiles, preferred learner level, learning history, and saved vocabulary. User-data tables are designed for Row Level Security so each user can only access their own rows.
 
-The backend owns the OpenAI API key, embeds questions, retrieves grammar context from ChromaDB, and returns structured tutor responses. The vector store contains 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passe compose, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
+The backend owns the OpenAI API key, embeds questions, retrieves grammar context from Pinecone, and returns structured tutor responses. The Pinecone index contains 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passe compose, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
 
 ## Future Improvements
 
