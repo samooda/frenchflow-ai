@@ -1,7 +1,7 @@
 """
-CLI wrapper for a single RAG query against the FrenchFlow collection.
+CLI wrapper for a single RAG query against the FrenchFlow Pinecone index.
 
-Shows the top-3 retrieved chunks (id, distance, topic, preview) so retrieval
+Shows the top-3 retrieved chunks (id, score, topic, preview) so retrieval
 quality is visible, then prints the full structured answer from rag.py.
 
 Usage:
@@ -13,16 +13,27 @@ level defaults to 'beginner'.
 import os
 import sys
 
-import chromadb
 from openai import OpenAI
+from pinecone import Pinecone
 
-from pipeline_config import DB_PATH, COLLECTION_NAME, EMBED_MODEL
+from pipeline_config import EMBED_MODEL, PINECONE_INDEX_NAME, PINECONE_NAMESPACE
 from rag import answer_question
 
 
 def _preview(text, n=160):
     flat = " ".join(text.split())
     return flat[:n] + ("..." if len(flat) > n else "")
+
+
+def _namespace_label():
+    return PINECONE_NAMESPACE or "(default)"
+
+
+def _vector_count(stats):
+    if PINECONE_NAMESPACE:
+        namespace_stats = stats.namespaces.get(PINECONE_NAMESPACE)
+        return namespace_stats.vector_count if namespace_stats else 0
+    return stats.total_vector_count
 
 
 def main():
@@ -36,34 +47,36 @@ def main():
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise SystemExit("OPENAI_API_KEY not set in backend/.env.")
+    pinecone_api_key = os.getenv("PINECONE_API_KEY")
+    if not pinecone_api_key:
+        raise SystemExit("PINECONE_API_KEY not set in backend/.env.")
 
     client = OpenAI(api_key=api_key)
-    collection = chromadb.PersistentClient(path=DB_PATH).get_or_create_collection(
-        COLLECTION_NAME
-    )
+    index = Pinecone(api_key=pinecone_api_key).Index(PINECONE_INDEX_NAME)
 
     print(f"Question        : {question}")
     print(f"Level           : {level}")
-    print(f"Collection size : {collection.count()}")
+    print(f"Index           : {PINECONE_INDEX_NAME}")
+    print(f"Namespace       : {_namespace_label()}")
+    print(f"Vector count    : {_vector_count(index.describe_index_stats())}")
 
     embed = (
         client.embeddings.create(model=EMBED_MODEL, input=question).data[0].embedding
     )
-    results = collection.query(
-        query_embeddings=[embed],
-        n_results=3,
-        include=["documents", "metadatas", "distances"],
+    results = index.query(
+        vector=embed,
+        top_k=3,
+        namespace=PINECONE_NAMESPACE,
+        include_metadata=True,
     )
-    ids = (results.get("ids") or [[]])[0]
-    docs = (results.get("documents") or [[]])[0]
-    metas = (results.get("metadatas") or [[]])[0] or [None] * len(ids)
-    dists = (results.get("distances") or [[]])[0] or [None] * len(ids)
 
     print("\n--- Top-3 retrieved chunks ---")
-    for i, (id_, doc, meta, dist) in enumerate(zip(ids, docs, metas, dists)):
+    for i, match in enumerate(results.matches or []):
+        meta = match.metadata or {}
+        doc = meta.get("text", "")
         topic = (meta or {}).get("topic", "") or "(no metadata)"
-        dist_s = f"{dist:.4f}" if dist is not None else "n/a"
-        print(f"[{i}] id={id_}  dist={dist_s}  topic={topic!r}")
+        score_s = f"{match.score:.4f}" if match.score is not None else "n/a"
+        print(f"[{i}] id={match.id}  score={score_s}  topic={topic!r}")
         print(f"    {_preview(doc)}")
 
     print("\n--- RAG answer ---")

@@ -1,12 +1,13 @@
 import os
 import json
-import chromadb
 from openai import OpenAI
+from pinecone import Pinecone
 
-from pipeline_config import DB_PATH, COLLECTION_NAME, EMBED_MODEL
+from pipeline_config import EMBED_MODEL, PINECONE_INDEX_NAME, PINECONE_NAMESPACE
 
 _openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-_collection = chromadb.PersistentClient(path=DB_PATH).get_or_create_collection(COLLECTION_NAME)
+_pinecone_client = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+_index = _pinecone_client.Index(PINECONE_INDEX_NAME)
 
 _FALLBACK = {
     "answer": "Sorry, I could not generate an answer. Please try again.",
@@ -37,11 +38,22 @@ def answer_question(question: str, level: str) -> dict:
     )
     question_embedding = embed_response.data[0].embedding
 
-    results = _collection.query(query_embeddings=[question_embedding], n_results=3)
-    documents = results.get("documents")
-    if not documents or not documents[0]:
+    results = _index.query(
+        vector=question_embedding,
+        top_k=3,
+        namespace=PINECONE_NAMESPACE,
+        include_metadata=True,
+    )
+    matches = results.matches or []
+    if not matches:
         return _FALLBACK
-    chunks = documents[0]
+    chunks = [
+        match.metadata.get("text", "")
+        for match in matches
+        if match.metadata and match.metadata.get("text")
+    ]
+    if not chunks:
+        return _FALLBACK
 
     context = "\n---\n".join(chunks)
     user_msg = f"Question: {question}\n\nRelevant content:\n{context}"

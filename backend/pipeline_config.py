@@ -12,10 +12,8 @@ MANIFEST_META_PATH = os.path.join(DATA_DIR, "sources", "tex_manifest_meta.json")
 RAW_DIR = os.path.join(DATA_DIR, "raw_sources", "tex_french_grammar")
 CHUNKS_DIR = os.path.join(DATA_DIR, "processed_chunks")
 
-_raw_db_path = os.getenv("CHROMA_DB_PATH", "./chroma_data")
-DB_PATH = _raw_db_path if os.path.isabs(_raw_db_path) else os.path.join(_dir, _raw_db_path)
-
-COLLECTION_NAME = "french_grammar"
+PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "frenchflow")
+PINECONE_NAMESPACE = os.getenv("PINECONE_NAMESPACE", "")
 EMBED_MODEL = "text-embedding-3-small"
 
 
