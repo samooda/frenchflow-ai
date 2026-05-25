@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react'
+import AuthModal from './components/AuthModal'
+import { useAuth } from './context/AuthContext'
 
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
 const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/ask`
@@ -162,6 +164,8 @@ export default function App() {
   const [status, setStatus]     = useState('idle')
   const [result, setResult]     = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
+  const [isAuthOpen, setIsAuthOpen] = useState(false)
+  const { user } = useAuth()
 
   const isLoading = status === 'loading'
   const canSubmit = question.trim().length > 0 && !isLoading
@@ -215,7 +219,17 @@ export default function App() {
           <p className="text-sm text-[var(--text-muted)]">
             Ask a grammar or vocabulary question. Get a structured, sourced answer.
           </p>
+          {!user && (
+            <>
+              {/* // design-pass */}
+              <button type="button" onClick={() => setIsAuthOpen(true)}>
+                Sign in
+              </button>
+            </>
+          )}
         </header>
+
+        {isAuthOpen && <AuthModal onClose={() => setIsAuthOpen(false)} />}
 
         {/* Form */}
         <form onSubmit={handleSubmit} noValidate>
