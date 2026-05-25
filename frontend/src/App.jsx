@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import AuthModal from './components/AuthModal'
 import HistoryList from './components/HistoryList'
 import UserMenu from './components/UserMenu'
+import VocabularyList from './components/VocabularyList'
 import { useAuth } from './context/AuthContext'
 import { useHistory } from './hooks/useHistory'
+import { useVocabulary } from './hooks/useVocabulary'
 import { supabase } from './lib/supabase'
 
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
@@ -96,7 +98,7 @@ function exampleText(ex) {
 
 // ─── Success result ────────────────────────────────────────────────
 
-function AnswerResult({ result }) {
+function AnswerResult({ result, canSaveExamples, onSaveExample }) {
   const examples = Array.isArray(result.examples) ? result.examples : []
 
   return (
@@ -122,6 +124,14 @@ function AnswerResult({ result }) {
                 <li key={i} className="flex gap-3 font-serif text-sm leading-relaxed text-[var(--text-primary)]">
                   <span className="text-[var(--text-muted)] select-none shrink-0" aria-hidden="true">—</span>
                   <span>{exampleText(ex)}</span>
+                  {canSaveExamples && (
+                    <>
+                      {/* // design-pass */}
+                      <button type="button" onClick={() => onSaveExample(ex)}>
+                        Save
+                      </button>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
@@ -170,8 +180,10 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState('')
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  const [isVocabularyOpen, setIsVocabularyOpen] = useState(false)
   const { user } = useAuth()
   const { recordHistory } = useHistory()
+  const { saveWord } = useVocabulary()
 
   const isLoading = status === 'loading'
   const canSubmit = question.trim().length > 0 && !isLoading
@@ -215,6 +227,16 @@ export default function App() {
   function handleLevelChange(nextLevel) {
     setLevel(nextLevel)
     persistPreferredLevel(nextLevel)
+  }
+
+  function handleSaveExample(example) {
+    const text = exampleText(example)
+
+    saveWord({
+      word: text,
+      definition: result?.answer ?? '',
+      example: text,
+    })
   }
 
   async function handleSubmit(e) {
@@ -285,6 +307,10 @@ export default function App() {
               <button type="button" onClick={() => setIsHistoryOpen(current => !current)}>
                 History
               </button>
+              {/* // design-pass */}
+              <button type="button" onClick={() => setIsVocabularyOpen(current => !current)}>
+                Vocabulary
+              </button>
             </>
           ) : (
             <>
@@ -298,6 +324,7 @@ export default function App() {
 
         {isAuthOpen && <AuthModal onClose={() => setIsAuthOpen(false)} />}
         {user && isHistoryOpen && <HistoryList />}
+        {user && isVocabularyOpen && <VocabularyList />}
 
         {/* Form */}
         <form onSubmit={handleSubmit} noValidate>
@@ -348,7 +375,13 @@ export default function App() {
         {/* Results — always in DOM for aria-live to work correctly */}
         <section aria-live="polite" aria-atomic="false" aria-label="Answer">
           {isLoading && <LoadingResult />}
-          {status === 'success' && result && <AnswerResult result={result} />}
+          {status === 'success' && result && (
+            <AnswerResult
+              result={result}
+              canSaveExamples={Boolean(user)}
+              onSaveExample={handleSaveExample}
+            />
+          )}
         </section>
 
       </main>
