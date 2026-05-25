@@ -1,6 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from '../hooks/useHistory'
 
+function HistorySkeleton() {
+  return (
+    <div aria-busy="true" aria-label="Loading history" className="divide-y divide-[var(--border)]">
+      {[0, 1, 2].map(i => (
+        <div key={i} className="py-4 space-y-2.5">
+          <div className="shimmer h-4 rounded w-full" />
+          <div className="shimmer h-4 rounded w-3/4" />
+          <div className="flex items-center justify-between pt-0.5">
+            <div className="shimmer h-3 w-16 rounded-full" />
+            <div className="shimmer h-3 w-10 rounded" />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function HistoryList() {
   const { fetchHistory } = useHistory()
   const [entries, setEntries] = useState([])
@@ -32,37 +49,26 @@ export default function HistoryList() {
     }
   }, [fetchHistory])
 
-  if (status === 'loading') {
-    return (
-      <div aria-busy="true" aria-label="Loading history" className="mb-8 space-y-2.5">
-        <div className="shimmer h-3 w-16 rounded" />
-        <div className="shimmer h-4 rounded" />
-        <div className="shimmer h-4 w-3/4 rounded" />
-      </div>
-    )
-  }
+  if (status === 'loading') return <HistorySkeleton />
 
   if (status === 'error') {
     return (
-      <p role="alert" className="mb-8 text-sm text-[var(--error)]">
+      <p role="alert" className="text-sm text-[var(--error)]">
         {errorMsg}
       </p>
     )
   }
 
   return (
-    <section aria-label="Learning history" className="mb-8">
-      <p className="text-xs font-medium uppercase tracking-widest text-[var(--text-muted)] mb-4">
-        History
-      </p>
+    <section aria-label="Learning history">
       {entries.length === 0 ? (
-        <p className="text-sm text-[var(--text-muted)] text-center py-6">
-          No questions asked yet.
+        <p className="text-sm text-[var(--text-muted)] py-8 text-center">
+          No questions yet. Ask something on the home page to start your history.
         </p>
       ) : (
         <ul className="divide-y divide-[var(--border)]">
           {entries.map(entry => (
-            <li key={entry.id} className="py-4 flex flex-col gap-1.5">
+            <li key={entry.id} className="py-4 flex flex-col gap-2">
               <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">
                 {entry.question}
               </p>
