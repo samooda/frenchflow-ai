@@ -10,7 +10,16 @@ from slowapi.util import get_remote_address
 from rag import answer_question
 
 limiter = Limiter(key_func=get_remote_address)
-frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+
+
+def get_allowed_origins():
+    raw_origins = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+    return [
+        origin.strip().rstrip("/")
+        for origin in raw_origins.split(",")
+        if origin.strip()
+    ]
+
 
 app = FastAPI(title="FrenchFlow AI")
 app.state.limiter = limiter
@@ -18,7 +27,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_origin],
+    allow_origins=get_allowed_origins(),
     allow_methods=["*"],
     allow_headers=["*"],
 )
