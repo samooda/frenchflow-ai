@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AuthModal from './components/AuthModal'
+import UserMenu from './components/UserMenu'
 import { useAuth } from './context/AuthContext'
+import { supabase } from './lib/supabase'
 
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
 const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/ask`
@@ -170,6 +172,47 @@ export default function App() {
   const isLoading = status === 'loading'
   const canSubmit = question.trim().length > 0 && !isLoading
 
+  useEffect(() => {
+    if (!user) return
+
+    let isMounted = true
+
+    async function loadPreferredLevel() {
+      const { data } = await supabase
+        .from('profiles')
+        .select('preferred_level')
+        .eq('id', user.id)
+        .maybeSingle()
+
+      if (!isMounted) return
+      if (data?.preferred_level && LEVELS.includes(data.preferred_level)) {
+        setLevel(data.preferred_level)
+      }
+    }
+
+    loadPreferredLevel()
+
+    return () => {
+      isMounted = false
+    }
+  }, [user])
+
+  async function persistPreferredLevel(nextLevel) {
+    if (!user) return
+
+    await supabase
+      .from('profiles')
+      .upsert({
+        id: user.id,
+        preferred_level: nextLevel,
+      })
+  }
+
+  function handleLevelChange(nextLevel) {
+    setLevel(nextLevel)
+    persistPreferredLevel(nextLevel)
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
@@ -219,7 +262,9 @@ export default function App() {
           <p className="text-sm text-[var(--text-muted)]">
             Ask a grammar or vocabulary question. Get a structured, sourced answer.
           </p>
-          {!user && (
+          {user ? (
+            <UserMenu />
+          ) : (
             <>
               {/* // design-pass */}
               <button type="button" onClick={() => setIsAuthOpen(true)}>
@@ -256,7 +301,7 @@ export default function App() {
 
           {/* Level selector */}
           <div className="mb-6">
-            <LevelSelector selected={level} onChange={setLevel} />
+            <LevelSelector selected={level} onChange={handleLevelChange} />
           </div>
 
           {/* Submit */}
