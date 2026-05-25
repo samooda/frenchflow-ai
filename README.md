@@ -2,15 +2,23 @@
 
 An AI-powered French tutor that answers grammar and vocabulary questions using a curated knowledge base.
 
-![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white) ![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6F00?style=flat) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white) ![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6F00?style=flat) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
-![FrenchFlow AI — structured answer with examples, practice question, and source snippet](docs/screenshot.jpg)
+![Answered question with structured explanation, examples, practice question, and source snippet](docs/Answered_Question.jpg)
+Answered question view.
+
+![Learning history tab with saved question and answer sessions](docs/History_Tab.jpg)
+Learning history tab.
+
+![Saved vocabulary tab with saved example sentences](docs/Vocab_Tab.jpg)
+Saved vocabulary tab.
 
 ## Tech Stack
 
-- **Frontend:** React, Tailwind CSS, Vite
+- **Frontend:** React, React Router, Tailwind CSS, Vite
 - **Backend:** Python, FastAPI, Uvicorn
 - **AI/RAG:** OpenAI API (`text-embedding-3-small`, `gpt-4o-mini`), ChromaDB
+- **User data:** Supabase Auth and Postgres through `@supabase/supabase-js`
 
 ## Features
 
@@ -18,17 +26,23 @@ An AI-powered French tutor that answers grammar and vocabulary questions using a
 - Choose your learner level: Beginner, Intermediate, or Advanced
 - Receive a structured answer with explanation, usage examples, a practice question, and a source reference
 - Explanations and practice questions are always in English; French example sentences are preserved in French
-- Fully keyboard-accessible — level selector supports arrow-key navigation
-- Loading, error, and success states with smooth transitions
+- Sign up, sign in, and sign out with Supabase Auth
+- Save and restore your preferred learner level
+- Record successful question-and-answer sessions to your learning history
+- Save useful example sentences to a personal vocabulary list and delete them later
+- Navigate between Home, Login, Signup, and Library pages with protected access to saved learning data
+- Fully keyboard-accessible level selector with arrow-key navigation
+- Loading, error, empty, and success states across the tutor and library views
 
 ## How It Works
 
-1. The user submits a question and selects a learner level (Beginner, Intermediate, or Advanced)
+1. The user submits a question and selects a learner level: Beginner, Intermediate, or Advanced
 2. The question is embedded using `text-embedding-3-small`
 3. The top 3 closest chunks are retrieved from a ChromaDB vector store
 4. `gpt-4o-mini` receives the question, level, and retrieved chunks as context
-5. Returns a structured JSON response: answer, usage examples, a practice question, and a source snippet
+5. The backend returns structured JSON: answer, usage examples, a practice question, and a source snippet
 6. Responses are always in English; French example sentences are preserved in French
+7. Signed-in users can save their level preference, learning history, and vocabulary through Supabase
 
 ## Local Setup
 
@@ -55,18 +69,27 @@ uvicorn main:app --reload
 ```
 
 Backend runs at `http://localhost:8000`.
-- `GET /` — health check
-- `POST /ask` — accepts `{ question, level }`, returns `{ answer, examples, practice_question, source_snippet }`. Rate-limited to 10 requests/minute per IP.
+- `GET /` - health check
+- `POST /ask` - accepts `{ question, level }`, returns `{ answer, examples, practice_question, source_snippet }`. Rate-limited to 10 requests/minute per IP.
 
 ### Frontend
 
 ```bash
 cd frontend
 npm install
+cp .env.example .env        # fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 npm run dev
 ```
 
 Frontend runs at `http://localhost:5173`.
+
+The frontend expects:
+
+```env
+VITE_API_URL=http://localhost:8000
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
 ### Refresh the knowledge base
 
@@ -78,18 +101,25 @@ python ingest_tex.py
 
 ## Architecture
 
-The vector store is ChromaDB with 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passé composé, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
+The app is split into a Vite/React frontend and a FastAPI backend. React Router defines the public and protected routes:
+
+- `/` - main tutor experience
+- `/login` - sign-in page
+- `/signup` - account creation page
+- `/library` - protected learning history and saved vocabulary
+
+The frontend talks to the backend through `VITE_API_URL` for RAG answers and to Supabase through `@supabase/supabase-js` for auth and user data. Supabase stores profiles, preferred learner level, learning history, and saved vocabulary. User-data tables are designed for Row Level Security so each user can only access their own rows.
+
+The backend owns the OpenAI API key, embeds questions, retrieves grammar context from ChromaDB, and returns structured tutor responses. The vector store contains 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passe compose, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
 
 ## Future Improvements
 
-- Supabase Auth — user accounts and session management
-- User profiles — saved level preference and personalisation
-- Saved vocabulary — bookmark words and phrases for review
-- Question and answer history — revisit past sessions
-- Deployment — input limits, CORS restrictions, and usage controls (Vercel + Render/Railway)
-- Security hardening — rate limit tuning, input validation, API key rotation policy
-- Docker / Kubernetes — optional later DevOps improvements
-- Pronunciation and accent coverage — currently out of scope (Tex's French Grammar has no dedicated pages for liaison, silent letters, or orthography)
+- Supabase RLS verification before public deployment
+- Library search, filters, and review workflows for saved history and vocabulary
+- Deployment with production input limits, CORS restrictions, and usage controls (Vercel + Render/Railway)
+- Security hardening with rate limit tuning, input validation, and API key rotation policy
+- Docker / Kubernetes as optional later DevOps improvements
+- Pronunciation and accent coverage is currently out of scope because Tex's French Grammar has no dedicated pages for liaison, silent letters, or orthography
 
 ## Attribution
 
