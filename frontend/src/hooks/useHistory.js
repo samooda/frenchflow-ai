@@ -8,6 +8,9 @@ export function useHistory() {
   const recordHistory = useCallback(async (entry) => {
     if (!user) return { data: null, error: null }
 
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return { data: null, error: null }
+
     return supabase
       .from('learning_history')
       .insert({
@@ -22,6 +25,9 @@ export function useHistory() {
 
   const fetchHistory = useCallback(async () => {
     if (!user) return { data: [], error: null }
+
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return { data: [], error: null }
 
     return supabase
       .from('learning_history')

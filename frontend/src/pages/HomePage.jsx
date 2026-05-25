@@ -188,6 +188,9 @@ export default function HomePage() {
     let isMounted = true
 
     async function loadPreferredLevel() {
+      const { data: sessionData } = await supabase.auth.getSession()
+      if (!sessionData.session?.access_token) return
+
       const { data } = await supabase
         .from('profiles')
         .select('preferred_level')
@@ -209,6 +212,9 @@ export default function HomePage() {
 
   async function persistPreferredLevel(nextLevel) {
     if (!user) return
+
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return
 
     await supabase
       .from('profiles')

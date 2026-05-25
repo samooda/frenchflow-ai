@@ -8,6 +8,9 @@ export function useVocabulary() {
   const saveWord = useCallback(async ({ word, definition, example }) => {
     if (!user) return { data: null, error: null }
 
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return { data: null, error: null }
+
     return supabase
       .from('saved_vocabulary')
       .insert({
@@ -21,6 +24,9 @@ export function useVocabulary() {
   const fetchVocabulary = useCallback(async () => {
     if (!user) return { data: [], error: null }
 
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return { data: [], error: null }
+
     return supabase
       .from('saved_vocabulary')
       .select('*')
@@ -30,6 +36,9 @@ export function useVocabulary() {
 
   const deleteWord = useCallback(async (id) => {
     if (!user) return { data: null, error: null }
+
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (!sessionData.session?.access_token) return { data: null, error: null }
 
     return supabase
       .from('saved_vocabulary')
