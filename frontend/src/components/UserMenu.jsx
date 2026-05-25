@@ -6,16 +6,17 @@ export default function UserMenu() {
   if (!user) return null
 
   return (
-    <>
-      {/* // design-pass */}
-      <div>
-        {/* // design-pass */}
-        <span>{user.email}</span>
-        {/* // design-pass */}
-        <button type="button" onClick={signOut}>
-          Sign out
-        </button>
-      </div>
-    </>
+    <div className="flex items-center gap-2">
+      <span className="text-xs text-[var(--text-muted)] truncate max-w-[200px]">
+        {user.email}
+      </span>
+      <button
+        type="button"
+        onClick={signOut}
+        className="btn-ghost focus-ring shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg"
+      >
+        Sign out
+      </button>
+    </div>
   )
 }

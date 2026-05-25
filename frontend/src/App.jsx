@@ -125,12 +125,13 @@ function AnswerResult({ result, canSaveExamples, onSaveExample }) {
                   <span className="text-[var(--text-muted)] select-none shrink-0" aria-hidden="true">—</span>
                   <span>{exampleText(ex)}</span>
                   {canSaveExamples && (
-                    <>
-                      {/* // design-pass */}
-                      <button type="button" onClick={() => onSaveExample(ex)}>
-                        Save
-                      </button>
-                    </>
+                    <button
+                      type="button"
+                      onClick={() => onSaveExample(ex)}
+                      className="btn-save focus-ring ml-auto shrink-0 self-start px-2 py-0.5 text-xs rounded-full"
+                    >
+                      Save
+                    </button>
                   )}
                 </li>
               ))}
@@ -301,24 +302,36 @@ export default function App() {
             Ask a grammar or vocabulary question. Get a structured, sourced answer.
           </p>
           {user ? (
-            <>
+            <div className="mt-4 flex items-center gap-2 flex-wrap">
               <UserMenu />
-              {/* // design-pass */}
-              <button type="button" onClick={() => setIsHistoryOpen(current => !current)}>
+              <div className="h-4 w-px bg-[var(--border)] mx-0.5 shrink-0" aria-hidden="true" />
+              <button
+                type="button"
+                onClick={() => setIsHistoryOpen(current => !current)}
+                aria-pressed={isHistoryOpen}
+                className="btn-ghost focus-ring px-3 py-1.5 text-xs font-medium rounded-lg"
+              >
                 History
               </button>
-              {/* // design-pass */}
-              <button type="button" onClick={() => setIsVocabularyOpen(current => !current)}>
+              <button
+                type="button"
+                onClick={() => setIsVocabularyOpen(current => !current)}
+                aria-pressed={isVocabularyOpen}
+                className="btn-ghost focus-ring px-3 py-1.5 text-xs font-medium rounded-lg"
+              >
                 Vocabulary
               </button>
-            </>
+            </div>
           ) : (
-            <>
-              {/* // design-pass */}
-              <button type="button" onClick={() => setIsAuthOpen(true)}>
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={() => setIsAuthOpen(true)}
+                className="btn-ghost focus-ring px-3 py-1.5 text-xs font-medium rounded-lg"
+              >
                 Sign in
               </button>
-            </>
+            </div>
           )}
         </header>
 
