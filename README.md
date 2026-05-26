@@ -4,6 +4,8 @@ An AI-powered French tutor that answers grammar and vocabulary questions using a
 
 ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white) ![Pinecone](https://img.shields.io/badge/Pinecone-000000?style=flat) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
+**Live site:** [frenchflow-ai.vercel.app](https://frenchflow-ai.vercel.app/)
+
 ![Answered question with structured explanation, examples, practice question, and source snippet](docs/Answered_Question.jpg)
 
 Answered question view.
@@ -113,13 +115,11 @@ The app is split into a Vite/React frontend and a FastAPI backend. React Router 
 
 The frontend talks to the backend through `VITE_API_URL` for RAG answers and to Supabase through `@supabase/supabase-js` for auth and user data. Supabase stores profiles, preferred learner level, learning history, and saved vocabulary. User-data tables are designed for Row Level Security so each user can only access their own rows.
 
-The backend owns the OpenAI API key, embeds questions, retrieves grammar context from Pinecone, and returns structured tutor responses. The Pinecone index contains 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passe compose, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to `http://localhost:5173`.
+The backend owns the OpenAI API key, embeds questions, retrieves grammar context from Pinecone, and returns structured tutor responses. The Pinecone index contains 34 chunks processed from [Tex's French Grammar](https://www.laits.utexas.edu/tex/) (26 pages covering nouns, articles, adjectives, verb conjugation, passe compose, imparfait, futur proche, object pronouns, negation, and interrogatives). The API is rate-limited at 10 requests/minute per IP and CORS-restricted to the deployed frontend origin.
 
 ## Future Improvements
 
-- Supabase RLS verification before public deployment
 - Library search, filters, and review workflows for saved history and vocabulary
-- Deployment with production input limits, CORS restrictions, and usage controls (Vercel + Render/Railway)
 - Security hardening with rate limit tuning, input validation, and API key rotation policy
 - Docker / Kubernetes as optional later DevOps improvements
 - Pronunciation and accent coverage is currently out of scope because Tex's French Grammar has no dedicated pages for liaison, silent letters, or orthography
