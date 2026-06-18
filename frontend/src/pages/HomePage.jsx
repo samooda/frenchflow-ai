@@ -7,6 +7,9 @@ import { supabase } from '../lib/supabase'
 const LEVELS = ['Beginner', 'Intermediate', 'Advanced']
 const API_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}/ask`
 
+// Matches rag.py's _FALLBACK answer — the backend could not ground a response.
+const FALLBACK_ANSWER = 'Sorry, I could not generate an answer. Please try again.'
+
 // ─── Level pill-tab selector with roving tabindex ──────────────────
 
 function LevelSelector({ selected, onChange }) {
@@ -28,13 +31,13 @@ function LevelSelector({ selected, onChange }) {
       <span id="level-label" className="text-xs tracking-widest uppercase font-medium text-[var(--text-muted)]">
         Level
       </span>
-      <div role="tablist" aria-labelledby="level-label" className="flex gap-1.5">
+      <div role="radiogroup" aria-labelledby="level-label" className="flex gap-1.5">
         {LEVELS.map((lvl, i) => (
           <button
             key={lvl}
             type="button"
-            role="tab"
-            aria-selected={selected === lvl}
+            role="radio"
+            aria-checked={selected === lvl}
             tabIndex={selected === lvl ? 0 : -1}
             ref={el => (tabRefs.current[i] = el)}
             onKeyDown={e => handleKeyDown(e, i)}
@@ -94,7 +97,7 @@ function exampleText(ex) {
 
 // ─── Success result ────────────────────────────────────────────────
 
-function AnswerResult({ result, canSaveExamples, onSaveExample }) {
+function AnswerResult({ result, canSaveExamples, onSaveExample, savedExamples }) {
   const examples = Array.isArray(result.examples) ? result.examples : []
 
   return (
@@ -116,21 +119,26 @@ function AnswerResult({ result, canSaveExamples, onSaveExample }) {
           <section aria-label="Examples">
             <SectionLabel>Examples</SectionLabel>
             <ul className="space-y-2.5 list-none">
-              {examples.map((ex, i) => (
-                <li key={i} className="flex gap-3 font-serif text-sm leading-relaxed text-[var(--text-primary)]">
-                  <span className="text-[var(--text-muted)] select-none shrink-0" aria-hidden="true">—</span>
-                  <span>{exampleText(ex)}</span>
-                  {canSaveExamples && (
-                    <button
-                      type="button"
-                      onClick={() => onSaveExample(ex)}
-                      className="btn-save focus-ring ml-auto shrink-0 self-start px-2 py-0.5 text-xs rounded-full"
-                    >
-                      Save
-                    </button>
-                  )}
-                </li>
-              ))}
+              {examples.map((ex, i) => {
+                const saved = savedExamples?.has(exampleText(ex))
+                return (
+                  <li key={i} className="flex gap-3 font-serif text-sm leading-relaxed text-[var(--text-primary)]">
+                    <span className="text-[var(--text-muted)] select-none shrink-0" aria-hidden="true">—</span>
+                    <span>{exampleText(ex)}</span>
+                    {canSaveExamples && (
+                      <button
+                        type="button"
+                        onClick={() => onSaveExample(ex)}
+                        disabled={saved}
+                        aria-label={saved ? 'Saved to vocabulary' : 'Save example to vocabulary'}
+                        className={`btn-save focus-ring ml-auto shrink-0 self-start px-2 py-0.5 text-xs rounded-full disabled:cursor-default ${saved ? 'text-[var(--accent)]' : ''}`}
+                      >
+                        {saved ? 'Saved' : 'Save'}
+                      </button>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           </section>
         </>
@@ -175,6 +183,7 @@ export default function HomePage() {
   const [status, setStatus]     = useState('idle')
   const [result, setResult]     = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
+  const [savedExamples, setSavedExamples] = useState(() => new Set())
   const { user } = useAuth()
   const { recordHistory } = useHistory()
   const { saveWord } = useVocabulary()
@@ -229,14 +238,29 @@ export default function HomePage() {
     persistPreferredLevel(nextLevel)
   }
 
-  function handleSaveExample(example) {
+  async function handleSaveExample(example) {
     const text = exampleText(example)
+    if (savedExamples.has(text)) return
 
-    saveWord({
+    // Optimistically mark as saved so the button gives immediate feedback and
+    // can't be double-submitted into a duplicate row.
+    setSavedExamples(prev => new Set(prev).add(text))
+
+    // Saved items are example sentences, not dictionary words: store the
+    // sentence itself; leave definition empty rather than dumping the answer.
+    const { error } = await saveWord({
       word: text,
-      definition: result?.answer ?? '',
+      definition: '',
       example: text,
     })
+
+    if (error) {
+      setSavedExamples(prev => {
+        const next = new Set(prev)
+        next.delete(text)
+        return next
+      })
+    }
   }
 
   async function handleSubmit(e) {
@@ -246,6 +270,7 @@ export default function HomePage() {
     setStatus('loading')
     setResult(null)
     setErrorMsg('')
+    setSavedExamples(new Set())
 
     try {
       const controller = new AbortController()
@@ -262,6 +287,15 @@ export default function HomePage() {
       if (res.status === 429) throw new Error('rate_limited')
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
+
+      // Backend couldn't ground an answer — show a retry hint, not a blank result,
+      // and don't record an empty answer to history.
+      if (!data.answer?.trim() || data.answer === FALLBACK_ANSWER) {
+        setErrorMsg('No grounded answer found for that question. Try rephrasing it.')
+        setStatus('error')
+        return
+      }
+
       setResult(data)
       setStatus('success')
 
@@ -346,6 +380,7 @@ export default function HomePage() {
             result={result}
             canSaveExamples={Boolean(user)}
             onSaveExample={handleSaveExample}
+            savedExamples={savedExamples}
           />
         )}
       </section>

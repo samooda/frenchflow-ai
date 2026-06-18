@@ -32,7 +32,9 @@ export default function LibraryPage() {
             key={tab}
             type="button"
             role="tab"
+            id={`library-tab-${tab}`}
             aria-selected={activeTab === tab}
+            aria-controls="library-panel"
             tabIndex={activeTab === tab ? 0 : -1}
             ref={el => (tabRefs.current[i] = el)}
             onKeyDown={e => handleKeyDown(e, i)}
@@ -46,7 +48,12 @@ export default function LibraryPage() {
 
       <div className="mt-5 border-t border-[var(--border)]" />
 
-      <div className="mt-8">
+      <div
+        id="library-panel"
+        role="tabpanel"
+        aria-labelledby={`library-tab-${activeTab}`}
+        className="mt-8"
+      >
         {activeTab === 'History'    && <HistoryList />}
         {activeTab === 'Vocabulary' && <VocabularyList />}
       </div>

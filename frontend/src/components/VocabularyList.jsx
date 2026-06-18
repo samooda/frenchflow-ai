@@ -79,32 +79,34 @@ export default function VocabularyList() {
         </p>
       ) : (
         <ul className="divide-y divide-[var(--border)]">
-          {entries.map(entry => (
-            <li key={entry.id} className="py-4 flex flex-col gap-1.5">
-              <div className="flex items-start justify-between gap-4">
-                <p className="text-sm font-medium text-[var(--text-primary)]">
-                  {entry.word}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(entry.id)}
-                  className="focus-ring shrink-0 text-xs text-[var(--text-muted)] hover:text-[var(--error)] transition-colors duration-150"
-                >
-                  Remove
-                </button>
-              </div>
-              {entry.definition && (
-                <p className="text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
-                  {entry.definition}
-                </p>
-              )}
-              {entry.example && entry.example !== entry.word && (
-                <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)] mt-0.5">
-                  {entry.example}
-                </p>
-              )}
-            </li>
-          ))}
+          {entries.map(entry => {
+            // Saved items are example sentences; the sentence is the hero.
+            // Fall back to `word` for older rows where it may differ.
+            const sentence = entry.example || entry.word
+            const showDefinition = entry.definition && entry.definition !== sentence
+            return (
+              <li key={entry.id} className="py-4 flex flex-col gap-1.5">
+                <div className="flex items-start justify-between gap-4">
+                  <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">
+                    {sentence}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(entry.id)}
+                    aria-label="Remove from vocabulary"
+                    className="focus-ring shrink-0 text-xs text-[var(--text-muted)] hover:text-[var(--error)] transition-colors duration-150"
+                  >
+                    Remove
+                  </button>
+                </div>
+                {showDefinition && (
+                  <p className="text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
+                    {entry.definition}
+                  </p>
+                )}
+              </li>
+            )
+          })}
         </ul>
       )}
     </section>
